@@ -14,5 +14,5 @@ COPY model/ /app/model/
 # 设置环境变量
 ENV PYTHONUNBUFFERED=1
 
-# 运行预测脚本
-CMD ["python", "predict.py"]
+# 设置入口点
+CMD ["bash", "run.sh"]
