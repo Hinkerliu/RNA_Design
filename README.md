@@ -16,6 +16,7 @@ RNA逆折叠是计算生物学中的一个核心概念，指设计特定的RNA�
 
 ## 项目结构
 
+```
 RNA_Design_Project/
 ├── data/                  # 数据目录
 │   ├── train_coords/      # 训练数据坐标文件
@@ -33,6 +34,9 @@ RNA_Design_Project/
 ├── Dockerfile             # Docker配置
 ├── run.sh                 # 运行脚本
 └── README.md              # 项目说明
+```
+
+
 
 
 ## 技术方案
