@@ -1,4 +1,4 @@
-FROM pytorch/pytorch:2.0.0-cuda11.7-cudnn8-runtime
+FROM registry.cn-hangzhou.aliyuncs.com/sais-public/pytorch:2.0.0-py3.9.12-cuda11.8.0-u22.04
 
 WORKDIR /app
 
