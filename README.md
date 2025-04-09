@@ -16,9 +16,6 @@ RNA逆折叠是计算生物学中的一个核心概念，指设计特定的RNA�
 
 ## 项目结构
 
-```markdown:f:\3rd-World-AI4S_Y2025\02-Innovative-Drugs\RNA_Design_Project\README.md
-
-```
 RNA_Design_Project/
 ├── data/                  # 数据目录
 │   ├── train_coords/      # 训练数据坐标文件
