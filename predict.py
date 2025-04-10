@@ -15,9 +15,11 @@ from data_processing import RNADataset, featurize
 
 @dataclass
 class DataConfig:
-    test_npy_data_dir: str = '/data/input/coords'
-    test_data_path: str = '/data/input/test_data.csv'
-    output_path: str = '/data/output/results.csv'
+    # 修改为官方指定的输入路径
+    test_npy_data_dir: str = '/saisdata/coords'
+    test_data_path: str = '/saisdata/seqs/dummy_seq.csv'  # 假设有一个dummy序列文件
+    # 修改为官方指定的输出路径和文件名
+    output_path: str = '/saisresult/submit.csv'
 
 
 @dataclass
@@ -44,14 +46,44 @@ class Config:
 def main():
     config = Config()
     
-    # 检查输入目录是否存在
-    if not os.path.exists(config.data_config.test_data_path):
-        print(f"错误：测试数据文件未找到：{config.data_config.test_data_path}")
-        return
+    # 打印当前工作目录和环境信息，便于调试
+    print(f"当前工作目录: {os.getcwd()}")
+    print(f"输入目录内容:")
+    os.system("ls -la /saisdata/")
     
+    # 检查输入目录是否存在
     if not os.path.exists(config.data_config.test_npy_data_dir):
         print(f"错误：测试npy数据目录未找到：{config.data_config.test_npy_data_dir}")
+        # 尝试查找替代目录
+        print("尝试查找其他可能的数据目录...")
+        os.system("find /saisdata -type d | sort")
         return
+    
+    # 如果测试数据文件不存在，尝试创建一个虚拟的测试数据文件
+    if not os.path.exists(config.data_config.test_data_path):
+        print(f"警告：测试数据文件未找到：{config.data_config.test_data_path}")
+        print("尝试创建虚拟测试数据文件...")
+        
+        # 获取所有npy文件并创建虚拟测试数据
+        npy_files = [f for f in os.listdir(config.data_config.test_npy_data_dir) 
+                    if f.endswith('.npy')]
+        
+        if npy_files:
+            dummy_data = []
+            for npy_file in npy_files:
+                pdb_id = os.path.splitext(npy_file)[0]
+                dummy_data.append({'pdb_id': pdb_id, 'sequence': 'A'})  # 虚拟序列
+            
+            # 创建目录（如果不存在）
+            os.makedirs(os.path.dirname(config.data_config.test_data_path), exist_ok=True)
+            
+            # 保存虚拟测试数据
+            dummy_df = pd.DataFrame(dummy_data)
+            dummy_df.to_csv(config.data_config.test_data_path, index=False)
+            print(f"已创建虚拟测试数据文件：{config.data_config.test_data_path}")
+        else:
+            print(f"错误：在 {config.data_config.test_npy_data_dir} 中未找到npy文件")
+            return
     
     # 确保输出目录存在
     os.makedirs(os.path.dirname(config.data_config.output_path), exist_ok=True)
@@ -99,7 +131,7 @@ def main():
                 pred_seq = ''.join([alphabet[s.item()] for s in sample])
                 results.append({
                     'pdb_id': names[i],
-                    'pred_seq': pred_seq
+                    'seq': pred_seq  # 修改这里：将'pred_seq'改为'seq'
                 })
                 start_idx = end_idx
     
