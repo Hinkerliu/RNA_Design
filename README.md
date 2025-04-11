@@ -1,3 +1,4 @@
+
 # RNA设计项目
 
 本项目实现了基于深度学习的RNA逆向折叠算法，可以根据RNA的3D结构预测其对应的核苷酸序列。这是为"第三届世界科学智能大赛创新药赛道：RNA逆折叠与功能核酸设计"比赛开发的解决方案。
@@ -79,6 +80,51 @@ RNA_Design_Project/
 1. **pdb_id**：RNA结构的唯一标识符
 2. **pred_seq**：预测的RNA序列，由碱基（A, U, C, G）按顺序排列
 
+## 环境配置
+
+### 创建Python虚拟环境
+
+为了确保项目依赖的一致性和隔离性，建议使用Python虚拟环境。以下是创建和激活"RNA-Design"虚拟环境的步骤：
+
+#### 使用venv（Python内置）
+
+
+# 创建虚拟环境
+```bash
+python -m venv RNA-Design
+```
+
+# 激活虚拟环境（Windows）
+```bash
+RNA-Design\Scripts\activate
+```
+
+# 激活虚拟环境（Linux/Mac）
+```bash
+source RNA-Design/bin/activate
+```
+
+#### 使用Conda
+
+
+# 创建虚拟环境
+```bash
+conda create -n RNA-Design python=3.8
+```
+
+# 激活虚拟环境
+```bash
+conda activate RNA-Design
+```
+
+### 安装依赖
+
+激活虚拟环境后，安装项目所需的依赖：
+
+```bash
+pip install -r requirements.txt
+```
+
 ## 环境要求
 
 # 基础依赖
@@ -113,7 +159,6 @@ pip install torch-scatter -f URL_ADDRESS.pyg.org/whl/torch-2.0.0+cu117.html
 ## 数据准备
 1. 下载训练数据、验证数据和测试数据。
 2. 确保数据格式与项目要求一致。
-pip install torch-scatter -f https://data.pyg.org/whl/torch-2.0.0+cu117.html
 
 ## 使用方法
 
