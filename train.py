@@ -17,12 +17,13 @@ from data_processing import RNADataset, featurize
 
 @dataclass
 class DataConfig:
-    train_data_path: str = 'data/train_data.csv'
-    train_npy_data_dir: str = 'data/train_coords'
-    val_data_path: str = 'data/val_data.csv'
-    val_npy_data_dir: str = 'data/val_coords'
-    test_data_path: str = 'data/test_data.csv'
-    test_npy_data_dir: str = 'data/test_coords'
+    # 修改数据路径，使用绝对路径或环境变量
+    train_data_path: str = os.environ.get('TRAIN_DATA_PATH', 'data/train_data.csv')
+    train_npy_data_dir: str = os.environ.get('TRAIN_NPY_DIR', 'data/train_coords')
+    val_data_path: str = os.environ.get('VAL_DATA_PATH', 'data/val_data.csv')
+    val_npy_data_dir: str = os.environ.get('VAL_NPY_DIR', 'data/val_coords')
+    test_data_path: str = os.environ.get('TEST_DATA_PATH', 'data/test_data.csv')
+    test_npy_data_dir: str = os.environ.get('TEST_NPY_DIR', 'data/test_coords')
 
 @dataclass
 class ModelConfig:
@@ -112,6 +113,52 @@ def main():
     data_config = DataConfig()
     model_config = ModelConfig()
     train_config = TrainConfig()
+    
+    # 打印当前工作目录和数据路径
+    print(f"当前工作目录: {os.getcwd()}")
+    print(f"训练数据路径: {data_config.train_data_path}")
+    print(f"训练数据目录: {data_config.train_npy_data_dir}")
+    
+    # 检查数据文件是否存在
+    if not os.path.exists(data_config.train_data_path):
+        print(f"错误: 找不到训练数据文件 {data_config.train_data_path}")
+        print("尝试查找可能的数据文件...")
+        # 列出当前目录下的所有文件和目录
+        for root, dirs, files in os.walk('.'):
+            # 限制遍历深度
+            if root.count(os.sep) > 3:
+                continue
+            for file in files:
+                if file.endswith('.csv'):
+                    print(f"找到CSV文件: {os.path.join(root, file)}")
+        
+        # 尝试使用新的目录结构
+        print("尝试使用新的目录结构...")
+        alt_train_path = os.path.join("data", "train", "seqs", "train.csv")
+        alt_train_dir = os.path.join("data", "train", "coords")
+        alt_val_path = os.path.join("data", "valid", "seqs", "valid.csv")
+        alt_val_dir = os.path.join("data", "valid", "coords")
+        
+        if os.path.exists(alt_train_path):
+            print(f"找到替代训练数据文件: {alt_train_path}")
+            data_config.train_data_path = alt_train_path
+            data_config.train_npy_data_dir = alt_train_dir
+            print(f"更新训练数据路径为: {data_config.train_data_path}")
+            print(f"更新训练数据目录为: {data_config.train_npy_data_dir}")
+        else:
+            print(f"替代训练数据文件 {alt_train_path} 也不存在")
+            return
+        
+        if os.path.exists(alt_val_path):
+            print(f"找到替代验证数据文件: {alt_val_path}")
+            data_config.val_data_path = alt_val_path
+            data_config.val_npy_data_dir = alt_val_dir
+            print(f"更新验证数据路径为: {data_config.val_data_path}")
+            print(f"更新验证数据目录为: {data_config.val_npy_data_dir}")
+        else:
+            print(f"替代验证数据文件 {alt_val_path} 不存在，将使用训练数据进行验证")
+            data_config.val_data_path = data_config.train_data_path
+            data_config.val_npy_data_dir = data_config.train_npy_data_dir
     
     # 创建保存模型的目录
     os.makedirs(train_config.checkpoint_dir, exist_ok=True)
