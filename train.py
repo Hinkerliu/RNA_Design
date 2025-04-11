@@ -38,11 +38,11 @@ class ModelConfig:
 
 @dataclass
 class TrainConfig:
-    batch_size: int = 16
+    batch_size: int = 8  # 减小批量大小，原为16
     num_workers: int = 4
-    epochs: int = 100
-    lr: float = 1e-3
-    weight_decay: float = 1e-5
+    epochs: int = 200  # 增加训练轮数，原为100
+    lr: float = 5e-4  # 调整学习率，原为1e-3
+    weight_decay: float = 1e-4  # 增加权重衰减，原为1e-5
     checkpoint_dir: str = 'model'
     device: str = 'cuda:0' if torch.cuda.is_available() else 'cpu'
 

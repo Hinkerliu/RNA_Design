@@ -81,13 +81,39 @@ RNA_Design_Project/
 
 ## 环境要求
 
-- Python 3.8+
-- PyTorch 2.0.0+
-- CUDA 11.7+
-- pandas
-- biopython
-- tqdm
-- torch-scatter
+# 基础依赖
+numpy>=1.20.0
+pandas>=1.3.0
+tqdm>=4.62.0
+
+# PyTorch相关
+torch==2.0.0
+torch-scatter==2.1.0
+
+# 生物信息学工具
+biopython>=1.79
+
+# 数据处理和可视化
+matplotlib>=3.5.0
+seaborn>=0.11.2
+
+# 其他工具
+scikit-learn>=1.0.0
+
+
+可以通过以下命令安装依赖：
+
+```bash
+pip install -r requirements.txt
+```
+对于torch-scatter，需要根据CUDA版本单独安装：
+```bash
+pip install torch-scatter -f URL_ADDRESS.pyg.org/whl/torch-2.0.0+cu117.html
+```
+## 数据准备
+1. 下载训练数据、验证数据和测试数据。
+2. 确保数据格式与项目要求一致。
+pip install torch-scatter -f https://data.pyg.org/whl/torch-2.0.0+cu117.html
 
 ## 使用方法
 
@@ -96,6 +122,27 @@ RNA_Design_Project/
 ```bash
 python train.py
 ```
+
+### 优化训练参数
+为了提高训练精度，可以在train.py中调整以下参数：
+
+1. 模型参数 ：
+   
+   - 增加隐藏层维度（hidden）：从128增加到256
+   - 增加邻居数量（k_neighbors）：从30增加到40
+   - 增加编码器和解码器层数：从3层增加到4层
+   - 调整dropout率：从0.1调整到0.2
+2. 训练参数 ：
+   
+   - 减小批量大小（batch_size）：从16减小到8
+   - 增加训练轮数（epochs）：从100增加到200
+   - 调整学习率（lr）：从1e-3调整到5e-4
+   - 增加权重衰减（weight_decay）：从1e-5增加到1e-4
+3. 其他优化 ：
+   
+   - 添加梯度裁剪（max_norm=1.0）
+   - 优化学习率调度器参数
+
 ### 本地预测
 ```
 python predict.py
