@@ -89,17 +89,17 @@ RNA_Design_Project/
 #### 使用venv（Python内置）
 
 
-# 创建虚拟环境
+##### 创建虚拟环境
 ```bash
 python -m venv RNA-Design
 ```
 
-# 激活虚拟环境（Windows）
+##### 激活虚拟环境（Windows）
 ```bash
 RNA-Design\Scripts\activate
 ```
 
-# 激活虚拟环境（Linux/Mac）
+##### 激活虚拟环境（Linux/Mac）
 ```bash
 source RNA-Design/bin/activate
 ```
@@ -107,12 +107,12 @@ source RNA-Design/bin/activate
 #### 使用Conda
 
 
-# 创建虚拟环境
+##### 创建虚拟环境
 ```bash
 conda create -n RNA-Design python=3.8
 ```
 
-# 激活虚拟环境
+##### 激活虚拟环境
 ```bash
 conda activate RNA-Design
 ```
@@ -127,23 +127,23 @@ pip install -r requirements.txt
 
 ## 环境要求
 
-# 基础依赖
+##### 基础依赖
 numpy>=1.20.0
 pandas>=1.3.0
 tqdm>=4.62.0
 
-# PyTorch相关
+##### PyTorch相关
 torch==2.0.0
 torch-scatter==2.1.0
 
-# 生物信息学工具
+##### 生物信息学工具
 biopython>=1.79
 
-# 数据处理和可视化
+##### 数据处理和可视化
 matplotlib>=3.5.0
 seaborn>=0.11.2
 
-# 其他工具
+##### 其他工具
 scikit-learn>=1.0.0
 
 
