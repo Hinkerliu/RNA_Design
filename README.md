@@ -153,6 +153,12 @@ scikit-learn>=1.0.0
 pip install -r requirements.txt
 ```
 对于torch-scatter，需要根据CUDA版本单独安装：
+然后根据实际安装的PyTorch版本安装torch-scatter。
+例如，如果安装了PyTorch 2.2.0，使用以下命令：
+```bash
+pip install torch-scatter -f https://data.pyg.org/whl/torch-2.2.0+cpu.html
+```
+或者，如果安装了CUDA 11.7，使用以下命令
 ```bash
 pip install torch-scatter -f URL_ADDRESS.pyg.org/whl/torch-2.0.0+cu117.html
 ```
